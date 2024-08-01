@@ -3,6 +3,9 @@ import { hedgehogProps } from "../../types/obstacle";
 
 function Hedgehog(props: hedgehogProps) {
   const { key, coord, direction, index, line } = props;
+
+  console.log(key);
+
   const frontPoints = [];
   for (let i = 0; i < 10; i++) {
     frontPoints.push(
