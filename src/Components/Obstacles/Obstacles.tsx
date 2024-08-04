@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Vector3 } from "@react-three/fiber";
@@ -13,7 +14,6 @@ import {
   getObstaclesYCoord,
 } from "../../engine/obstacles/obstaclesY";
 import Hedgehog from "../../assets/hedgehogModel/Hedgehog";
-import { motion } from "framer-motion-3d";
 
 export const ObstaclesFix: React.FC = () => {
   const gridSize = getField();
@@ -90,46 +90,12 @@ export const ObstaclesX: React.FC = () => {
   );
 };
 
-// export const ObstaclesY: React.FC = () => {
-//   const gridSize = getField();
-//   const [obstaclesYCoord, setObstaclesYCoord] = useState<Array<Vector3>>([
-//     [0, 0, 0],
-//   ]);
-//   const [direction, setDirection] = useState(getObstaclesStepY());
-//   useEffect(() => {
-//     const yObstacles: Vector3[] = getObstaclesYCoord().map((coord) => {
-//       const yObstacleX = Math.round(coord[0] - gridSize / 2 - 1);
-//       const yObstaclesY = Math.round(coord[1] - gridSize / 2 - 1);
-//       return [yObstacleX, yObstaclesY, 0];
-//     });
-//     setDirection(getObstaclesStepY());
-//     setObstaclesYCoord(yObstacles);
-//   }, [getTimer()]);
-//   return (
-//     <>
-//       {obstaclesYCoord.map((coord: Vector3, index: number) => (
-//         <Hedgehog
-//           key={Math.random()}
-//           coord={coord}
-//           direction={direction}
-//           index={index}
-//           line={"Y"}
-//         />
-
-//       ))}
-//     </>
-//   );
-// };
-
-type Vector3 = [number, number, number];
-
 export const ObstaclesY: React.FC = () => {
   const gridSize = getField();
   const [obstaclesYCoord, setObstaclesYCoord] = useState<Array<Vector3>>([
     [0, 0, 0],
   ]);
-  const [direction, setDirection] = useState<number[]>(getObstaclesStepY());
-
+  const [direction, setDirection] = useState(getObstaclesStepY());
   useEffect(() => {
     const yObstacles: Vector3[] = getObstaclesYCoord().map((coord) => {
       const yObstacleX = Math.round(coord[0] - gridSize / 2 - 1);
@@ -139,24 +105,34 @@ export const ObstaclesY: React.FC = () => {
     setDirection(getObstaclesStepY());
     setObstaclesYCoord(yObstacles);
   }, [getTimer()]);
-
   return (
     <>
       {obstaclesYCoord.map((coord: Vector3, index: number) => (
-        <motion.div
-          key={index}
-          initial={{ y: coord[1] }}
-          animate={{ y: coord[1] + direction[index] }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        >
-          <Hedgehog
-            coord={coord}
-            direction={direction}
-            index={index}
-            line={"Y"}
-            key={index}
-          />
-        </motion.div>
+        <Hedgehog
+          key={Math.random()}
+          coord={coord}
+          direction={direction}
+          index={index}
+          line={"Y"}
+        />
+        // <>
+        //   <mesh
+        //     key={Math.random()}
+        //     position={coord}
+        //     rotation={[0, 0, direction[index] * -1.6]}
+        //   >
+        //     <coneGeometry args={[1, 2, 15, 1, false, 4.7, 3.12]} />
+        //     <meshStandardMaterial color={"#ffff66"} />
+        //   </mesh>
+        //   <mesh
+        //     key={Math.random()}
+        //     position={coord}
+        //     rotation={[0, 0, direction[index] * -1.6]}
+        //   >
+        //     <latheGeometry />
+        //     <meshStandardMaterial color={"#ffff66"} />
+        //   </mesh>
+        // </>
       ))}
     </>
   );
